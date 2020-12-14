@@ -1,1 +1,1 @@
-export const base_url = "http://localhost/assessment-backend/public/api/";
+export const base_url = "https://assessment-laravel.herokuapp.com/api/";
