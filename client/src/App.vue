@@ -13,11 +13,11 @@
 </template>
 <script>
 import axios from 'axios';
-import { base_url } from './utils/constants';
+import { base_url, header } from './utils/constants';
 export default {
   methods: {
     exportSql() {
-      axios.get(base_url + 'dump').then(() => {
+      axios.get(base_url + 'dump', header).then(() => {
         window.location = base_url + 'download';
       });
     }

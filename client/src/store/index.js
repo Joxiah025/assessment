@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import { base_url } from '../utils/constants';
+import { base_url, header } from '../utils/constants';
 
 Vue.use(Vuex)
+
 const store = new Vuex.Store({
     state () {
         return {
@@ -39,7 +40,7 @@ const store = new Vuex.Store({
     actions: {
         async fetchColumns(context) {  
             context.commit('clearError')        
-            await axios.get(base_url + 'columns/').then(res => {
+            await axios.get(base_url + 'columns/', header).then(res => {
                 context.commit('addColumnsFromFetch', res.data.data);
             })
             .catch(err => {
@@ -51,7 +52,7 @@ const store = new Vuex.Store({
                 context.commit('addError', 'Column title already exist');
             } else {
                 context.commit('clearError');       
-                await axios.post(base_url + 'columns/', { title: data }).then(res => {
+                await axios.post(base_url + 'columns/', { title: data }, header).then(res => {
                     context.dispatch('fetchColumns')
                 })
                 .catch(err => {
@@ -61,7 +62,7 @@ const store = new Vuex.Store({
         },
         async updateColumns(context, data) {
             context.commit('clearError');       
-            await axios.put(base_url + 'columns/', data).then(res => {
+            await axios.put(base_url + 'columns/', data, header).then(res => {
                 context.dispatch('fetchColumns')
             })
             .catch(err => {
@@ -70,7 +71,7 @@ const store = new Vuex.Store({
         },
         async removeColumn(context, data) {
             context.commit('clearError');       
-            await axios.delete(base_url + `columns/${data}`).then(res => {
+            await axios.delete(base_url + `columns/${data}`, header).then(res => {
                 context.dispatch('fetchColumns')
             })
             .catch(err => {
@@ -79,7 +80,7 @@ const store = new Vuex.Store({
         },
         async addCard(context, data) {
             context.commit('clearError');
-            await axios.post(base_url + 'card/', data).then(() => {
+            await axios.post(base_url + 'card/', data, header).then(() => {
                 context.dispatch('fetchColumns')
             })
             .catch(err => {
@@ -88,7 +89,7 @@ const store = new Vuex.Store({
         },
         async updateCard(context, data) {
             context.commit('clearError');
-            await axios.put(base_url + `card/${data.id}`, data).then(() => {
+            await axios.put(base_url + `card/${data.id}`, data, header).then(() => {
                 context.dispatch('fetchColumns')
             })
             .catch(err => {
