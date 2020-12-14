@@ -3,7 +3,7 @@ export const header = {
     mode: 'no-cors',
     headers: {
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded',
     },
     credentials: 'same-origin'
 };
