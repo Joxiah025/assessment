@@ -39,7 +39,7 @@ const store = new Vuex.Store({
     actions: {
         async fetchColumns(context) {  
             context.commit('clearError')        
-            await axios.get(base_url + 'columns/').then(res => {
+            await axios.get(base_url + 'columns').then(res => {
                 context.commit('addColumnsFromFetch', res.data.data);
             })
             .catch(err => {
