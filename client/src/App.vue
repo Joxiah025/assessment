@@ -13,11 +13,11 @@
 </template>
 <script>
 import axios from 'axios';
-import { base_url, header } from './utils/constants';
+import { base_url } from './utils/constants';
 export default {
   methods: {
     exportSql() {
-      axios.get(base_url + 'dump', header).then(() => {
+      axios.get(base_url + 'dump').then(() => {
         window.location = base_url + 'download';
       });
     }
@@ -33,6 +33,7 @@ export default {
   position: relative;
   &__export {
     text-align: center;
+    box-shadow: 1px 1px 1px #ccc;
     position: fixed;
     bottom: 50px;
     right: 50px;

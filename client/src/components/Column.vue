@@ -13,7 +13,7 @@
                 </button>
             </div>
         </div>
-        <draggable v-model="column.cards" @change="movementLog()" group="columns" @start="drag=true" @end="drag=false" handle=".card__controls">
+        <draggable v-model="column.cards" @change="movementLog($event)" group="columns" @start="drag=true" @end="drag=false" handle=".card__controls">
             <app-card v-for="item in column.cards" :key="item.id" :card="item"></app-card>
         </draggable>
         <v-dialog :clickToClose="false"/>
@@ -66,8 +66,10 @@
                     this.$modal.hide('dialog');
                 });
             },
-            movementLog () {
-                this.$store.dispatch('updateColumns', this.columns)
+            movementLog ($event) {
+                if($event.hasOwnProperty('added') || $event.hasOwnProperty('moved')) {
+                    this.$store.dispatch('updateColumns', this.columns)
+                }
             }
         },
         components: {
