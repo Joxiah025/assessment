@@ -114,4 +114,13 @@ class Handler extends ExceptionHandler
 
         return $this->errorResponse(null, 'Unexpected Exception. Try later', 500);
     }
+
+    public function report(Throwable $exception)
+    {
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
+            app('sentry')->captureException($exception);
+        }
+
+        parent::report($exception);
+    }
 }

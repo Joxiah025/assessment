@@ -8,7 +8,7 @@ use App\Models\Column;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Spatie\DbDumper\Databases\MySql;
+use Spatie\DbDumper\Databases\PostgreSql;
 
 class ColumnController extends Controller
 {
@@ -88,13 +88,15 @@ class ColumnController extends Controller
     }
 
     public function sqlDump() {
-        MySql::create()
-            ->setDumpBinaryPath('/usr/bin')
-            ->setDbName(env('DB_DATABASE'))
-            ->setUserName(env('DB_USERNAME'))
-            ->setPassword(env('DB_PASSWORD'))
-            ->includeTables(['columns', 'cards'])
-            ->dumpToFile('dump.sql');
+        $DATABASE_URL = parse_url(env('DATABASE_URL'));
+        PostgreSql::create()
+        ->setDbName(ltrim($DATABASE_URL['path'], "/"))
+        ->setHost($DATABASE_URL['host'])
+        ->setPort($DATABASE_URL['port'])
+        ->setUserName($DATABASE_URL['user'])
+        ->setPassword($DATABASE_URL['pass'])
+        ->includeTables(['columns', 'cards'])
+        ->dumpToFile('dump.sql');
         return $this->successResponse(null, '', 204);
     }
 }
